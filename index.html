@@ -4,16 +4,85 @@
     <meta charset="UTF-8">
     <title>Калькулятор</title>
     <style>
-        body { font-family: Arial; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #f5f5f5; }
-        .calculator { background: white; border-radius: 20px; padding: 25px; width: 350px; }
-        h1 { text-align: center; color: #333; }
-        input { width: calc(50% - 12px); padding: 12px; margin: 5px; border-radius: 8px; border: 1px solid #ddd; }
-        .buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 20px 0; }
-        button { padding: 15px; font-size: 18px; background: #e0e0e0; border: none; border-radius: 10px; cursor: pointer; }
-        button:hover { background: #d0d0d0; }
-        .result { margin-top: 15px; padding: 12px; background: #e94560; color: white; border-radius: 10px; text-align: center; font-size: 18px; font-weight: bold; }
-        .clear-btn { width: 100%; margin-top: 10px; background: #ff6b6b; color: white; }
-        .clear-btn:hover { background: #ff5252; }
+        * {
+            transition: all 0.3s ease;
+        }
+        
+        /* Светлая тема (по умолчанию) */
+        body {
+            font-family: Arial;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #f5f5f5;
+        }
+        
+        .calculator {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            width: 350px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin: 0 0 20px 0;
+        }
+        
+        input {
+            width: calc(50% - 12px);
+            padding: 12px;
+            margin: 5px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        button {
+            padding: 15px;
+            font-size: 18px;
+            background: #e0e0e0;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background: #d0d0d0;
+            transform: scale(1.02);
+        }
+        
+        .result {
+            margin-top: 15px;
+            padding: 12px;
+            background: #e94560;
+            color: white;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .clear-btn {
+            width: 100%;
+            margin-top: 10px;
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        .clear-btn:hover {
+            background: #ff5252;
+        }
         
         /* Стили для блока памяти */
         .memory-panel {
@@ -23,17 +92,20 @@
             border-radius: 10px;
             border: 1px solid #eee;
         }
+        
         .memory-panel h3 {
             margin: 0 0 10px 0;
             font-size: 16px;
             color: #666;
         }
+        
         .memory-list {
             min-height: 50px;
             max-height: 150px;
             overflow-y: auto;
             margin-bottom: 10px;
         }
+        
         .memory-item {
             background: white;
             padding: 8px;
@@ -45,6 +117,7 @@
             font-size: 13px;
             border: 1px solid #eee;
         }
+        
         .memory-item button {
             padding: 5px 10px;
             font-size: 12px;
@@ -54,9 +127,11 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        
         .memory-item button:hover {
             background: #c73550;
         }
+        
         .save-memory-btn {
             width: 100%;
             padding: 10px;
@@ -67,9 +142,11 @@
             cursor: pointer;
             font-size: 14px;
         }
+        
         .save-memory-btn:hover {
             background: #45a049;
         }
+        
         .clear-memory-btn {
             width: 100%;
             margin-top: 8px;
@@ -81,14 +158,98 @@
             cursor: pointer;
             font-size: 12px;
         }
+        
         .clear-memory-btn:hover {
             background: #ff5252;
+        }
+        
+        /* Тёмная тема (Шаг 14) */
+        body.d
+
+
+ark {
+            background: #1a1a2e;
+        }
+        
+        body.dark .calculator {
+            background: #16213e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        body.dark h1 {
+            color: #e0e0e0;
+        }
+        
+        body.dark input {
+            background: #0f3460;
+            color: white;
+            border-color: #e94560;
+        }
+        
+        body.dark input::placeholder {
+            color: #aaa;
+        }
+        
+        body.dark .buttons button {
+            background: #0f3460;
+            color: white;
+        }
+        
+        body.dark .buttons button:hover {
+            background: #e94560;
+        }
+        
+        body.dark .result {
+            background: #e94560;
+        }
+        
+        body.dark .memory-panel {
+            background: #0f3460;
+            border-color: #e94560;
+        }
+        
+        body.dark .memory-panel h3 {
+            color: #ccc;
+        }
+        
+        body.dark .memory-item {
+            background: #1a1a2e;
+            color: white;
+            border-color: #e94560;
+        }
+        
+        .theme-btn {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #4a4a4a;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .theme-btn:hover {
+            background: #e94560;
+            transform: scale(1.02);
+        }
+        
+        body.dark .theme-btn {
+            background: #e94560;
+        }
+        
+        body.dark .theme-btn:hover {
+            background: #ff6b6b;
         }
     </style>
 </head>
 <body>
     <div class="calculator">
         <h1>🧮 Умный калькулятор</h1>
+        
+        <!-- Кнопка тёмной темы (Шаг 14) -->
+        <button class="theme-btn" onclick="toggleTheme()">🌙 Включить тёмную тему</button>
         
         <input type="number" id="num1" placeholder="Первое число">
         <input type="number" id="num2" placeholder="Второе число">
@@ -111,9 +272,7 @@
                 <div style="color: #999; text-align: center;">Пока пусто</div>
             </div>
             <button class="save-memory-btn" onclick="saveToMemory()">💾 Запомнить результат</button>
-
-
-<button class="clear-memory-btn" onclick="clearMemory()">🗑️ Очистить всю память</button>
+            <button class="clear-memory-btn" onclick="clearMemory()">🗑️ Очистить всю память</button>
         </div>
     </div>
 
@@ -141,7 +300,10 @@
             
             if (op === '+') { res = a + b; operationText = 'сложение'; }
             if (op === '-') { res = a - b; operationText = 'вычитание'; }
-            if (op === '*') { res = a * b; operationText = 'умножение'; }
+            if (op
+
+
+=== '*') { res = a * b; operationText = 'умножение'; }
             if (op === '/') { res = a / b; operationText = 'деление'; }
             
             document.getElementById('result').innerHTML = `✅ Результат (${operationText}): ${res}`;
@@ -153,7 +315,7 @@
             document.getElementById('result').innerHTML = 'Результат: —';
         }
         
-        // Функция сохранения в память (с временем)
+        // Функция сохранения в память
         function saveToMemory() {
             let resultText = document.getElementById('result').innerHTML;
             let match = resultText.match(/\d+\.?\d*/);
@@ -163,7 +325,6 @@
                 let now = new Date();
                 let timeString = now.toLocaleTimeString();
                 
-                // Сохраняем объект с числом и временем
                 memory.push({
                     value: value,
                     time: timeString
@@ -180,7 +341,7 @@
             }
         }
         
-        // Функция обновления списка памяти (Шаг 13 - с временем и кнопками)
+        // Функция обновления списка памяти
         function updateMemoryDisplay() {
             let container = document.getElementById('memoryList');
             
@@ -203,13 +364,15 @@
         
         // Функция использования сохранённого числа
         function useMemoryItem(index) {
-
-
-let val = memory[index].value;
+            let val = memory[index].value;
             document.getElementById('result').innerHTML = `📋 Использовано значение из памяти: ${val}`;
             document.getElementById('result').style.background = '#4CAF50';
             setTimeout(() => {
-                document.getElementById('result').style.background = '#e94560';
+                if (document.body.classList.contains('dark')) {
+                    document.getElementById('result').style.background = '#e94560';
+                } else {
+                    document.getElementById('result').style.background = '#e94560';
+                }
             }, 1000);
         }
         
@@ -218,6 +381,22 @@ let val = memory[index].value;
             memory = [];
             updateMemoryDisplay();
             document.getElementById('result').innerHTML = '🗑️ Память полностью очищена';
+        }
+        
+        // Функция переключения тёмной темы (Шаг 14)
+        function toggleTheme() {
+            let body = document.body;
+            let btn = document.querySelector('.theme-btn');
+            body.classList.toggle('dark');
+            
+            if (body.classList.contains('dark')) {
+                btn.innerHTML = '☀️ Включить светлую тему';
+            } else {
+                btn.inne
+
+
+rHTML = '🌙 Включить тёмную тему';
+            }
         }
     </script>
 </body>
