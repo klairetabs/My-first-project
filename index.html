@@ -64,3 +64,12 @@ function clearAll() {
     <div id="memoryList"></div>
     <button onclick="saveToMemory()">Запомнить результат</button>
 </div>
+let memory = [];
+function saveToMemory() {
+    let text = document.getElementById('result').innerHTML;
+    let match = text.match(/\d+\.?\d*/);
+    if (match) {
+        memory.push(parseFloat(match[0]));
+        updateMemoryDisplay();
+    }
+}
