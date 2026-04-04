@@ -2,13 +2,12 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Умный калькулятор</title>
+    <title>Калькулятор + Примеры кода на языках</title>
     <style>
         * {
             transition: all 0.3s ease;
         }
         
-        /* Светлая тема (по умолчанию) */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
@@ -19,6 +18,14 @@
             background: #f5f5f5;
         }
         
+        .container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+        
         .calculator {
             background: white;
             border-radius: 20px;
@@ -27,14 +34,20 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
         
-        h1 {
-            text-align: center;
-            color: #333;
-            margin: 0 0 20px 0;
-            font-size: 24px;
+        .code-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            width: 350px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
         
-        /* Дисплей-индикатор */
+        h1, h2 {
+            text-align: center;
+            margin: 0 0 20px 0;
+            color: #333;
+        }
+        
         .display {
             background: #f0f0f0;
             padding: 15px;
@@ -45,7 +58,6 @@
             font-weight: bold;
             color: #e94560;
             font-family: monospace;
-            letter-spacing: 1px;
         }
         
         input {
@@ -73,7 +85,6 @@
             border-radius: 10px;
             cursor: pointer;
             font-weight: bold;
-            transition: all 0.2s;
         }
         
         button:hover {
@@ -99,17 +110,11 @@
             color: white;
         }
         
-        .clear-btn:hover {
-            background: #ff5252;
-        }
-        
-        /* Стили для блока памяти */
         .memory-panel {
             margin-top: 20px;
             padding: 15px;
             background: #f9f9f9;
             border-radius: 10px;
-            border: 1px solid #eee;
         }
         
         .memory-panel h3 {
@@ -134,7 +139,6 @@
             justify-content: space-between;
             align-items: center;
             font-size: 13px;
-            border: 1px solid #eee;
         }
         
         .memory-item button {
@@ -144,168 +148,165 @@
             color: white;
             border: none;
             border-radius: 5px;
-            cursor: pointer;
         }
         
-        .memory-item button:hover {
-            background: #c73550;
-            transform: scale(1.02);
+        .save-memory-btn, .clear-memory-btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
         }
         
         .save-memory-btn {
-            width: 100%;
-            padding: 10px;
             background: #4CAF50;
             color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        
-        .save-memory-btn:hover {
-            background: #45a049;
         }
         
         .clear-memory-btn {
-            width: 100%;
             margin-top: 8px;
-            padding: 8px;
             background: #ff6b6b;
             color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 12px;
         }
         
-        .clear-memory-btn:hover {
-            background: #ff5252;
+        /* Стили для панели кода */
+        .lang-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
         }
         
-        /* Тёмная тема */
-        body.dark {
-            background: #1a1a2e;
-        }
-        
-        body.dark .calculator {
-            background: #16213e;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        
-        body.dark h1 {
-            color: #e0e0e0;
-        }
-        
-        body.dark .display {
-            background: #0f3460;
-            color: #e94560;
-        }
-        
-        body.dark input {
-            background: #0f3460;
-            color: white;
-            border-color: #e94560;
-        }
-        
-        body.dark input::placeholder {
-            color: #aaa;
-        }
-        
-        body.dark .buttons button {
-            background: #0f3460;
-            color: white;
-        }
-        
-        body.dark .buttons button:hover {
-            background: #e94560;
-        }
-        
-        body.dark .result {
-            background: #e94560;
-        }
-        
-        body.dark .memory-panel {
-            background: #0f3460;
-            border-color: #e94560;
-        }
-        
-        body.dark .memory-panel h3 {
-            color: #ccc;
-        }
-        
-        body.dark .memory-item {
-            background: #1a1a2e;
-            color: white;
-            border-color: #e94560;
-        }
-        
-        .theme-btn {
-            width: 100%;
-            margin-bottom: 15px;
+        .lang-btn {
+            flex: 1;
             padding: 10px;
-            background: #4a4a4a;
-            color: white;
+            background: #e0e0e0;
             border: none;
             border-radius: 10px;
             cursor: pointer;
+            font-weight: bold;
             font-size: 14px;
         }
         
-        .theme-btn:hover {
+        .lang-btn.active {
             background: #e94560;
-            transform: scale(1.02);
+            color: white;
         }
         
-        body.dark .theme-btn {
-            background: #e94560;
+        .code-example {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            margin-top: 15px;
         }
         
-        body.dark .theme-btn:hover {
-            background: #ff6b6b;
+        .code-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #e94560;
+        }
+        
+        .theme-selector {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .theme-btn-small {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="calculator">
-        <h1>🧮 Умный калькулятор</h1>
-        
-        <!-- Кнопка тёмной темы -->
-        <button class="theme-btn" onclick="toggleTheme()">🌙 Включить тёмную тему</button>
-        
-        <!-- Дисплей-индикатор -->
-        <div class="display" id="display">✨ Готов к работе</div>
-        
-        <input type="number" id="num1" placeholder="Первое число">
-        <input type="number" id="num2" placeholder="Второе число">
-        
-        <div class="buttons">
-            <button onclick="calculate('+')">+</button>
-            <button onclick="calculate('-')">-</button>
-            <button onclick="calculate('*')">×</button>
-            <button onclick="calculate('/')">÷</button>
+    <div class="container">
+        <!-- Калькулятор -->
+        <div class="calculator">
+            <h1>🧮 Умный калькулятор</h1>
+            
+            <div class="theme-selector">
+                <button class="theme-btn-small" style="background:#f5f5f5;color:#333;" onclick="setTheme('light')">☀️</button>
+                <button class="theme-btn-small" style="background:#1a1a2e;color:white;" onclick="setTheme('dark')">🌙</button>
+                <button class="theme-btn-small" style="background:#1976d2;color:white;" onclick="setTheme('blue')">💙</button>
+                <button class="theme-btn-small" style="background:#e91e63;color:white;" onclick="setTheme('pink')">💗</button>
+            </div>
+            
+            <div class="display" id="display">✨ Готов к работе</div>
+            
+            <input type="number" id="num1" placeholder="Первое число">
+            <input type="number" id="num2" placeholder="Второе число">
+            
+            <div class="buttons">
+                <button onclick="calculate('+')">+</button>
+                <button onclick="calculate('-')">-</button>
+                <button onclick="calculate('*')">×</button>
+                <button onclick="calculate('/')">÷</button>
+            </div>
+            
+            <button class="clear-btn" onclick="clearAll()">🗑️ Очистить всё</button>
+            
+            <div class="result" id="result">Результат: —</div>
+            
+            <div class="memory-panel">
+                <h3>📌 Сохранённые результаты</h3>
+                <div class="memory-list" id="memoryList">
+                    <div style="color: #999; text-align: center;">Пока пусто</div>
+                </div>
+                <button class="save-memory-btn" onclick="saveToMemory()">💾 Запомнить результат</button>
+                <button class="clear-memory-btn" onclick="clearMemory()">🗑️ Очистить всю память</button>
+            </div>
         </div>
         
-        <button class="clear-btn" onclick="clearAll()">🗑️ Очистить всё</button>
-        
-        <div class="result" id="result">Результат: —</div>
-        
-        <!-- Блок памяти -->
-        <div class="memory-panel">
-            <h3>📌 Сохранённые результаты</h3>
-            <div class="memory-list" id="memoryList">
-                <div style="color: #999; text-align: center;">Пока пусто</div>
+        <!-- Панель с примерами кода на разных языках -->
+        <div class="code-panel">
+            <h2>📚 Примеры кода</h2>
+            <div class="lang-buttons">
+                <button class="lang-btn" onclick="showCode('python')">🐍 Python</button>
+                <button class="lang-btn" onclick="showCode('javascript')">🟨 JavaScript</button>
+                <button class="lang-btn" onclick="showCode('cpp')">⚙️ C++</button>
+                <button class="lang-btn" onclick="showCode('java')">☕ Java</button>
             </div>
-            <button class="save-memory-btn" onclick="saveToMemory()">💾 Запомнить результат</button>
-            <button class="clear-memory-btn" onclick="clearMemory()">🗑️ Очистить всю память</button>
+            <div id="codeDisplay" class="code-example">
+                <div class="code-title">🐍 Python</div>
+                <pre id="codeContent">def add(a, b):
+    return a + b
+
+def subtract(a, b):
+    return a - b
+
+def multiply(a, b):
+    return a * b
+
+def divide(a, b):
+    if b == 0:
+        return "Ошибка"
+    return a / b
+
+# Пример использования
+print(add(10, 5))  # 15</pre>
+            </div>
+            <div style="margin-top: 15px; font-size: 12px; color: #666; text-align: center;">
+                💡 Калькулятор написан на JavaScript, но здесь показан синтаксис других языков
+            </div>
         </div>
     </div>
 
     <script>
-        // Массив для хранения результатов
         let memory = [];
         
-        // Функция вычисления
+        // Функции калькулятора
         function calculate(op) {
             let a = parseFloat(document.getElementById('num1').value);
             let b = parseFloat(document.getElementById('num2').value);
@@ -313,21 +314,18 @@
             let operationText = '';
             let operationSymbol = '';
             
-            // Проверка на пустые поля
             if (isNaN(a) || isNaN(b)) {
                 document.getElementById('result').innerHTML = '❌ Ошибка: введите оба числа!';
                 document.getElementById('display').innerHTML = '⚠️ Ошибка ввода';
                 return;
             }
             
-            // Проверка на деление на ноль
             if (op === '/' && b === 0) {
                 document.getElementById('result').innerHTML = '❌ Ошибка: деление на ноль!';
                 document.getElementById('display').innerHTML = '⛔ Деление на 0 запрещено';
                 return;
             }
             
-            // Вычисление
             if (op === '+') { res = a + b; operationText = 'сложение'; operationSymbol = '+'; }
             if (op === '-') { res = a - b; operationText = 'вычитание'; operationSymbol = '-'; }
             if (op === '*') { res = a * b; operationText = 'умножение'; operationSymbol = '×'; }
@@ -337,7 +335,6 @@
             document.getElementById('result').innerHTML = `✅ Результат (${operationText}): ${res}`;
         }
         
-        // Очистка полей
         function clearAll() {
             document.getElementById('num1').value = '';
             document.getElementById('num2').value = '';
@@ -345,7 +342,6 @@
             document.getElementById('display').innerHTML = '✨ Готов к работе';
         }
         
-        // Сохранение в память
         function saveToMemory() {
             let resultText = document.getElementById('result').innerHTML;
             let match = resultText.match(/\d+\.?\d*/);
@@ -355,35 +351,25 @@
                 let now = new Date();
                 let timeString = now.toLocaleTimeString();
                 
-                memory.push({
-                    value: value,
-                    time: timeString
-                });
-                
+                memory.push({ value: value, time: timeString });
                 document.getElementById('result').innerHTML = `💾 Результат ${value} сохранён в память (${timeString})!`;
                 document.getElementById('display').innerHTML = `📌 Сохранено: ${value}`;
                 updateMemoryDisplay();
             } else if (resultText.includes('Ошибка')) {
-                document.getElementById('result').innerHTML = '❌ Нельзя сохранить ошибку! Сначала получите корректный результат.';
+                document.getElementById('result').innerHTML = '❌ Нельзя сохранить ошибку!';
                 document.getElementById('display').innerHTML = '⚠️ Нельзя сохранить ошибку';
-            } else if (resultText.includes('сохранён')) {
-                document.getElementById('result').innerHTML = '❌ Нельзя сохранить одно и то же дважды! Вычислите что-то новое.';
-                document.getElementById('display').innerHTML = '⚠️ Дублирование запрещено';
             } else {
-                document.getElementById('result').innerHTML = '❌ Нет результата для сохранения. Сначала что-нибудь вычислите!';
+                document.getElementById('result').innerHTML = '❌ Нет результата для сохранения!';
                 document.getElementById('display').innerHTML = '❌ Нет результата';
             }
         }
         
-        // Обновление списка памяти
         function updateMemoryDisplay() {
             let container = document.getElementById('memoryList');
-            
             if (memory.length === 0) {
-                container.innerHTML = '<div style="color: #999; text-align: center;">Пока пусто</div>';
+                container.innerHTML = '<div style="text-align: center;">Пока пусто</div>';
                 return;
             }
-            
             container.innerHTML = '';
             for (let i = 0; i < memory.length; i++) {
                 let item = document.createElement('div');
@@ -396,46 +382,156 @@
             }
         }
         
-        // Использование сохранённого числа
         function useMemoryItem(index) {
             let val = memory[index].value;
-            document.getElementById('result').innerHTML = `📋 Использовано значение из памяти: ${val}`;
+            document.getElementById('result').innerHTML = `📋 Использовано: ${val}`;
             document.getElementById('display').innerHTML = `📋 Загружено: ${val}`;
-            let resultDiv = document.getElementById('result');
-            resultDiv.style.background = '#4CAF50';
-            setTimeout(() => {
-                resultDiv.style.background = '#e94560';
-            }, 1000);
         }
         
-        // Очистка памяти
         function clearMemory() {
             memory = [];
             updateMemoryDisplay();
-            document.getElementById('result').innerHTML = '🗑️ Память полностью очищена';
+            document.getElementById('result').innerHTML = '🗑️ Память очищена';
             document.getElementById('display').innerHTML = '🗑️ Память очищена';
         }
         
-        // Переключение тёмной темы
-        function toggleTheme() {
-            let body = document.body;
-            let btn = document.querySelector('.theme-btn');
-            body.classList.toggle('dark');
-            
-            if (body.classList.contains('dark')) {
-                btn.innerHTML = '☀️ Включить светлую тему';
-                document.getElementById('display').innerHTML = '🌙 Тёмная тема включена';
-            } else {
-                btn.innerHTML = '🌙 Включить тёмную тему';
-                document.getElementById('display').innerHTML = '☀️ Светлая тема включена';
-            }
-            
+        // Функции смены темы
+        function setTheme(themeName) {
+            document.body.classList.remove('theme-light', 'theme-dark', 'theme-blue', 'theme-pink');
+            document.body.classList.add(`theme-${themeName}`);
+            let themeNames = { 'light': '☀️ Светлая тема', 'dark': '🌙 Тёмная тема', 'blue': '💙 Синяя тема', 'pink': '💗 Розовая тема' };
+            document.getElementById('display').innerHTML = themeNames[themeName];
             setTimeout(() => {
                 if (document.getElementById('result').innerHTML === 'Результат: —') {
                     document.getElementById('display').innerHTML = '✨ Готов к работе';
                 }
             }, 1500);
         }
+        
+        // НОВАЯ ФУНКЦИЯ: Показ примеров кода на разных языках
+        function showCode(lang) {
+            let codeContent = '';
+            let title = '';
+            
+            if (lang === 'python') {
+                title = '🐍 Python';
+                codeContent = `def calculate(a, b, operation):
+    if operation == '+':
+        return a + b
+    elif operation == '-':
+        return a - b
+    elif operation == '*':
+        return a * b
+    elif operation == '/':
+        if b == 0:
+            return "Ошибка: деление на ноль"
+        return a / b
+    else:
+        return "Неизвестная операция"
+
+# Пример
+print(calculate(10, 5, '+'))  # 15
+print(calculate(10, 0, '/'))  # Ошибка: деление на ноль`;
+            } else if (lang === 'javascript') {
+                title = '🟨 JavaScript';
+                codeContent = `function calculate(a, b, operation) {
+    if (operation === '+') return a + b;
+    if (operation === '-') return a - b;
+    if (operation === '*') return a * b;
+    if (operation === '/') {
+        if (b === 0) return "Ошибка: деление на ноль";
+        return a / b;
+    }
+    return "Неизвестная операция";
+}
+
+// Пример
+console.log(calculate(10, 5, '+')); // 15
+console.log(calculate(10, 0, '/')); // Ошибка: деление на ноль`;
+            } else if (lang === 'cpp') {
+                title = '⚙️ C++';
+                codeContent = `#include <iostream>
+using namespace std;
+
+double calculate(double a, double b, char op) {
+    switch(op) {
+        case '+': return a + b;
+        case '-': return a - b;
+        case '*': return a * b;
+        case '/': 
+            if (b == 0) {
+                cout << "Ошибка: деление на ноль" << endl;
+                return 0;
+            }
+            return a / b;
+        default: 
+            cout << "Неизвестная операция" << endl;
+            return 0;
+    }
+}
+
+int main() {
+    cout << calculate(10, 5, '+') << endl; // 15
+    return 0;
+}`;
+            } else if (lang === 'java') {
+                title = '☕ Java';
+                codeContent = `public class Calculator {
+    public static double calculate(double a, double b, char op) {
+        switch(op) {
+            case '+': return a + b;
+            case '-': return a - b;
+            case '*': return a * b;
+            case '/': 
+                if (b == 0) {
+                    System.out.println("Ошибка: деление на ноль");
+                    return 0;
+                }
+                return a / b;
+            default:
+                System.out.println("Неизвестная операция");
+                return 0;
+        }
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(calculate(10, 5, '+')); // 15
+    }
+}`;
+            }
+            
+            document.getElementById('codeContent').innerHTML = codeContent;
+            document.querySelector('.code-title').innerHTML = title;
+            
+            // Подсветка активной кнопки
+            let btns = document.querySelectorAll('.lang-btn');
+            btns.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+        
+        // Стили для тем (добавляем динамически)
+        function addThemeStyles() {
+            let style = document.createElement('style');
+            style.textContent = `
+                body.theme-light .calculator, body.theme-light .code-panel { background: white; }
+                body.theme-light .code-panel { border: 1px solid #eee; }
+                body.theme-dark { background: #1a1a2e; }
+                body.theme-dark .calculator, body.theme-dark .code-panel { background: #16213e; }
+                body.theme-dark .code-panel { border: 1px solid #e94560; }
+                body.theme-dark h1, body.theme-dark h2 { color: white; }
+                body.theme-dark .memory-panel { background: #0f3460; }
+                body.theme-dark .memory-item { background: #1a1a2e; color: white; }
+                body.theme-blue { background: #e3f2fd; }
+                body.theme-blue .calculator, body.theme-blue .code-panel { background: #bbdef5; }
+                body.theme-blue h1, body.theme-blue h2 { color: #0d47a1; }
+                body.theme-pink { background: #fce4ec; }
+                body.theme-pink .calculator, body.theme-pink .code-panel { background: #f8bbd0; }
+                body.theme-pink h1, body.theme-pink h2 { color: #880e4f; }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        addThemeStyles();
     </script>
 </body>
 </html>
