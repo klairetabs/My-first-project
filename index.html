@@ -33,7 +33,24 @@
     </div>
 
     <script>
-        // Здесь пока пусто, функция будет добавлена в Шаге 8
+        function calculate(op) {
+            let a = parseFloat(document.getElementById('num1').value);
+            let b = parseFloat(document.getElementById('num2').value);
+            let res;
+            
+            if (op === '+') res = a + b;
+            if (op === '-') res = a - b;
+            if (op === '*') res = a * b;
+            if (op === '/') res = a / b;
+            
+            document.getElementById('result').innerHTML = 'Результат: ' + res;
+        }
+        
+        function clearAll() {
+            document.getElementById('num1').value = '';
+            document.getElementById('num2').value = '';
+            document.getElementById('result').innerHTML = 'Результат: —';
+        }
     </script>
 </body>
 </html>
