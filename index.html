@@ -2,10 +2,20 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Умный калькулятор - Цветные темы</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Умный калькулятор</title>
+    
+    <!-- PWA мета-теги -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#e94560">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    
     <style>
         * {
             transition: all 0.3s ease;
+            user-select: none; /* Чтобы не выделялся текст на телефоне */
         }
         
         body {
@@ -15,12 +25,15 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
+            padding: 16px;
+            box-sizing: border-box;
         }
         
         .calculator {
-            border-radius: 20px;
-            padding: 25px;
-            width: 350px;
+            border-radius: 28px;
+            padding: 24px;
+            width: 100%;
+            max-width: 400px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
         
@@ -31,21 +44,22 @@
         }
         
         .display {
-            padding: 15px;
-            border-radius: 10px;
+            padding: 20px 15px;
+            border-radius: 16px;
             margin-bottom: 20px;
             text-align: center;
             font-size: 20px;
             font-weight: bold;
             font-family: monospace;
             letter-spacing: 1px;
+            min-height: 60px;
         }
         
         input {
             width: calc(50% - 12px);
-            padding: 12px;
+            padding: 14px 12px;
             margin: 5px;
-            border-radius: 8px;
+            border-radius: 12px;
             border: 1px solid;
             font-size: 16px;
             box-sizing: border-box;
@@ -59,24 +73,23 @@
         }
         
         button {
-            padding: 15px;
-            font-size: 18px;
+            padding: 18px;
+            font-size: 20px;
             border: none;
-            border-radius: 10px;
+            border-radius: 16px;
             cursor: pointer;
             font-weight: bold;
-            transition: all 0.2s;
+            transition: all 0.1s;
         }
         
-        button:hover {
-            transform: scale(1.02);
-            filter: brightness(0.95);
+        button:active {
+            transform: scale(0.96);
         }
         
         .result {
             margin-top: 15px;
-            padding: 12px;
-            border-radius: 10px;
+            padding: 14px;
+            border-radius: 16px;
             text-align: center;
             font-size: 18px;
             font-weight: bold;
@@ -90,12 +103,12 @@
         .memory-panel {
             margin-top: 20px;
             padding: 15px;
-            border-radius: 10px;
+            border-radius: 16px;
         }
         
         .memory-panel h3 {
             margin: 0 0 10px 0;
-            font-size: 16px;
+            font-size: 14px;
         }
         
         .memory-list {
@@ -106,9 +119,9 @@
         }
         
         .memory-item {
-            padding: 8px;
+            padding: 10px;
             margin: 5px 0;
-            border-radius: 5px;
+            border-radius: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -116,42 +129,36 @@
         }
         
         .memory-item button {
-            padding: 5px 10px;
+            padding: 6px 12px;
             font-size: 12px;
-            border-radius: 5px;
-            cursor: pointer;
+            border-radius: 8px;
         }
         
-        .save-memory-btn {
+        .save-memory-btn, .clear-memory-btn {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
             font-size: 14px;
         }
         
         .clear-memory-btn {
-            width: 100%;
             margin-top: 8px;
-            padding: 8px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 12px;
         }
         
         /* Панель выбора темы */
         .theme-panel {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 20px;
             justify-content: center;
+            flex-wrap: wrap;
         }
         
         .theme-option {
             padding: 8px 12px;
-            border-radius: 20px;
+            border-radius: 30px;
             cursor: pointer;
             font-size: 12px;
             font-weight: bold;
@@ -160,20 +167,18 @@
             transition: all 0.2s;
         }
         
-        .theme-option:hover {
-            transform: scale(1.05);
+        .theme-option:active {
+            transform: scale(0.95);
         }
         
-        /* ========== ТЕМА 1: СВЕТЛАЯ (по умолчанию) ========== */
+        /* ========== СВЕТЛАЯ ТЕМА ========== */
         body.theme-light {
             background: #f5f5f5;
         }
         body.theme-light .calculator {
             background: white;
         }
-        body.theme-light h1 {
-            color: #333;
-        }
+        body.theme-light h1 { color: #333; }
         body.theme-light .display {
             background: #f0f0f0;
             color: #e94560;
@@ -182,9 +187,6 @@
             background: white;
             color: #333;
             border-color: #ddd;
-        }
-        body.theme-light input::placeholder {
-            color: #aaa;
         }
         body.theme-light button {
             background: #e0e0e0;
@@ -202,9 +204,7 @@
             background: #f9f9f9;
             border: 1px solid #eee;
         }
-        body.theme-light .memory-panel h3 {
-            color: #666;
-        }
+        body.theme-light .memory-panel h3 { color: #666; }
         body.theme-light .memory-item {
             background: white;
             border: 1px solid #eee;
@@ -223,16 +223,14 @@
             color: white;
         }
         
-        /* ========== ТЕМА 2: ТЁМНАЯ ========== */
+        /* ========== ТЁМНАЯ ТЕМА ========== */
         body.theme-dark {
             background: #1a1a2e;
         }
         body.theme-dark .calculator {
             background: #16213e;
         }
-        body.theme-dark h1 {
-            color: #e0e0e0;
-        }
+        body.theme-dark h1 { color: #e0e0e0; }
         body.theme-dark .display {
             background: #0f3460;
             color: #e94560;
@@ -241,9 +239,6 @@
             background: #0f3460;
             color: white;
             border-color: #e94560;
-        }
-        body.theme-dark input::placeholder {
-            color: #aaa;
         }
         body.theme-dark button {
             background: #0f3460;
@@ -261,9 +256,7 @@
             background: #0f3460;
             border: 1px solid #e94560;
         }
-        body.theme-dark .memory-panel h3 {
-            color: #ccc;
-        }
+        body.theme-dark .memory-panel h3 { color: #ccc; }
         body.theme-dark .memory-item {
             background: #1a1a2e;
             border: 1px solid #e94560;
@@ -282,16 +275,14 @@
             color: white;
         }
         
-        /* ========== ТЕМА 3: СИНЯЯ ========== */
+        /* ========== СИНЯЯ ТЕМА ========== */
         body.theme-blue {
             background: #e3f2fd;
         }
         body.theme-blue .calculator {
             background: #bbdef5;
         }
-        body.theme-blue h1 {
-            color: #0d47a1;
-        }
+        body.theme-blue h1 { color: #0d47a1; }
         body.theme-blue .display {
             background: #1976d2;
             color: white;
@@ -300,9 +291,6 @@
             background: white;
             color: #0d47a1;
             border-color: #1976d2;
-        }
-        body.theme-blue input::placeholder {
-            color: #64b5f6;
         }
         body.theme-blue button {
             background: #1976d2;
@@ -320,9 +308,7 @@
             background: #e3f2fd;
             border: 1px solid #1976d2;
         }
-        body.theme-blue .memory-panel h3 {
-            color: #0d47a1;
-        }
+        body.theme-blue .memory-panel h3 { color: #0d47a1; }
         body.theme-blue .memory-item {
             background: white;
             border: 1px solid #1976d2;
@@ -341,16 +327,14 @@
             color: white;
         }
         
-        /* ========== ТЕМА 4: РОЗОВАЯ ========== */
+        /* ========== РОЗОВАЯ ТЕМА ========== */
         body.theme-pink {
             background: #fce4ec;
         }
         body.theme-pink .calculator {
             background: #f8bbd0;
         }
-        body.theme-pink h1 {
-            color: #880e4f;
-        }
+        body.theme-pink h1 { color: #880e4f; }
         body.theme-pink .display {
             background: #e91e63;
             color: white;
@@ -359,9 +343,6 @@
             background: white;
             color: #880e4f;
             border-color: #e91e63;
-        }
-        body.theme-pink input::placeholder {
-            color: #f06292;
         }
         body.theme-pink button {
             background: #e91e63;
@@ -379,9 +360,7 @@
             background: #fce4ec;
             border: 1px solid #e91e63;
         }
-        body.theme-pink .memory-panel h3 {
-            color: #880e4f;
-        }
+        body.theme-pink .memory-panel h3 { color: #880e4f; }
         body.theme-pink .memory-item {
             background: white;
             border: 1px solid #e91e63;
@@ -405,12 +384,11 @@
     <div class="calculator">
         <h1>🧮 Умный калькулятор</h1>
         
-        <!-- Панель выбора темы (4 варианта) -->
         <div class="theme-panel">
-            <div class="theme-option" style="background: #f5f5f5; color: #333; border-color: #ddd;" onclick="setTheme('light')">☀️ Светлая</div>
-            <div class="theme-option" style="background: #1a1a2e; color: white; border-color: #e94560;" onclick="setTheme('dark')">🌙 Тёмная</div>
-            <div class="theme-option" style="background: #1976d2; color: white; border-color: #0d47a1;" onclick="setTheme('blue')">💙 Синяя</div>
-            <div class="theme-option" style="background: #e91e63; color: white; border-color: #880e4f;" onclick="setTheme('pink')">💗 Розовая</div>
+            <div class="theme-option" style="background: #f5f5f5; color: #333; border-color: #ddd;" onclick="setTheme('light')">☀️</div>
+            <div class="theme-option" style="background: #1a1a2e; color: white; border-color: #e94560;" onclick="setTheme('dark')">🌙</div>
+            <div class="theme-option" style="background: #1976d2; color: white; border-color: #0d47a1;" onclick="setTheme('blue')">💙</div>
+            <div class="theme-option" style="background: #e91e63; color: white; border-color: #880e4f;" onclick="setTheme('pink')">💗</div>
         </div>
         
         <div class="display" id="display">✨ Готов к работе</div>
@@ -432,7 +410,7 @@
         <div class="memory-panel">
             <h3>📌 Сохранённые результаты</h3>
             <div class="memory-list" id="memoryList">
-                <div style="color: #999; text-align: center;">Пока пусто</div>
+                <div style="text-align: center;">Пока пусто</div>
             </div>
             <button class="save-memory-btn" onclick="saveToMemory()">💾 Запомнить результат</button>
             <button class="clear-memory-btn" onclick="clearMemory()">🗑️ Очистить всю память</button>
@@ -486,11 +464,7 @@
                 let now = new Date();
                 let timeString = now.toLocaleTimeString();
                 
-                memory.push({
-                    value: value,
-                    time: timeString
-                });
-                
+                memory.push({ value: value, time: timeString });
                 document.getElementById('result').innerHTML = `💾 Результат ${value} сохранён в память (${timeString})!`;
                 document.getElementById('display').innerHTML = `📌 Сохранено: ${value}`;
                 updateMemoryDisplay();
@@ -505,12 +479,10 @@
         
         function updateMemoryDisplay() {
             let container = document.getElementById('memoryList');
-            
             if (memory.length === 0) {
                 container.innerHTML = '<div style="text-align: center;">Пока пусто</div>';
                 return;
             }
-            
             container.innerHTML = '';
             for (let i = 0; i < memory.length; i++) {
                 let item = document.createElement('div');
@@ -553,6 +525,12 @@
                     document.getElementById('display').innerHTML = '✨ Готов к работе';
                 }
             }, 1500);
+        }
+        
+        // Регистрация сервис-воркера для PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('Service Worker зарегистрирован'));
         }
     </script>
 </body>
