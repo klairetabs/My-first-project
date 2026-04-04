@@ -38,6 +38,18 @@
             let b = parseFloat(document.getElementById('num2').value);
             let res;
             
+            // Проверка на пустые поля
+            if (isNaN(a) || isNaN(b)) {
+                document.getElementById('result').innerHTML = '❌ Ошибка: введите оба числа!';
+                return;
+            }
+            
+            // Проверка на деление на ноль
+            if (op === '/' && b === 0) {
+                document.getElementById('result').innerHTML = '❌ Ошибка: деление на ноль!';
+                return;
+            }
+            
             if (op === '+') res = a + b;
             if (op === '-') res = a - b;
             if (op === '*') res = a * b;
