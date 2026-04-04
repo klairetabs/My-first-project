@@ -15,7 +15,7 @@
         .clear-btn { width: 100%; margin-top: 10px; background: #ff6b6b; color: white; }
         .clear-btn:hover { background: #ff5252; }
         
-        /* Стили для блока памяти (Шаг 11) */
+        /* Стили для блока памяти */
         .memory-panel {
             margin-top: 20px;
             padding: 15px;
@@ -78,7 +78,7 @@
         
         <div class="result" id="result">Результат: —</div>
         
-        <!-- Блок памяти (Шаг 11) -->
+        <!-- Блок памяти -->
         <div class="memory-panel">
             <h3>📌 Сохранённые результаты</h3>
             <div class="memory-list" id="memoryList">
@@ -89,7 +89,7 @@
     </div>
 
     <script>
-        // Массив для памяти (будет заполнен в Шаге 12)
+        // Массив для хранения результатов
         let memory = [];
         
         function calculate(op) {
@@ -105,11 +105,11 @@
             }
             
             // Проверка на деление на ноль
-            if (op === '/' && b ===
+            if (op === '/' && b === 0) {
+                document.g
 
 
-0) {
-                document.getElementById('result').innerHTML = '❌ Ошибка: деление на ноль!';
+etElementById('result').innerHTML = '❌ Ошибка: деление на ноль!';
                 return;
             }
             
@@ -127,10 +127,44 @@
             document.getElementById('result').innerHTML = 'Результат: —';
         }
         
-        // Функция сохранения в память (будет дополнена в Шаге 12)
+        // Функция сохранения в память (Шаг 12 - работает!)
         function saveToMemory() {
-            // Временное сообщение, пока функция не настроена
-            document.getElementById('result').innerHTML = '⏳ Функция памяти будет добавлена в Шаге 12';
+            // Получаем текст результата
+            let resultText = document.getElementById('result').innerHTML;
+            
+            // Ищем число в тексте результата (например, "✅ Результат (сложение): 15" → находим 15)
+            let match = resultText.match(/\d+\.?\d*/);
+            
+            if (match && resultText !== 'Результат: —') {
+                let value = parseFloat(match[0]);
+                // Добавляем число в массив памяти
+                memory.push(value);
+                // Показываем сообщение
+                document.getElementById('result').innerHTML = `💾 Результат ${value} сохранён в память!`;
+                // Обновляем отображение списка памяти
+                updateMemoryDisplay();
+            } else {
+                document.getElementById('result').innerHTML = '❌ Нет результата для сохранения. Сначала что-нибудь вычислите!';
+            }
+        }
+        
+        // Функция обновления списка памяти (будет доработана в Шаге 13)
+        function updateMemoryDisplay() {
+            let container = document.getElementById('memoryList');
+            
+            if (memory.length === 0) {
+                container.innerHTML = '<div style="color: #999; text-align: center;">Пока пусто</div>';
+                return;
+            }
+            
+            // Показываем простой список чисел
+            container.innerHTML = '';
+            for (let i = 0; i < memory.length; i++) {
+                let item = document.createElement('div');
+                item.className = 'memory-item';
+                item.innerHTML = `<span>📊 ${memory[i]}</span>`;
+                container.appendChild(item);
+            }
         }
     </script>
 </body>
