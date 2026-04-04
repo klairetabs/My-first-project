@@ -7,10 +7,13 @@
         body { font-family: Arial; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #f5f5f5; }
         .calculator { background: white; border-radius: 20px; padding: 25px; width: 350px; }
         h1 { text-align: center; color: #333; }
-        input { width: calc(50% - 12px); padding: 12px; margin: 5px; border-radius: 8px; }
+        input { width: calc(50% - 12px); padding: 12px; margin: 5px; border-radius: 8px; border: 1px solid #ddd; }
         .buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 20px 0; }
-        button { padding: 15px; background: #e0e0e0; border: none; border-radius: 10px; cursor: pointer; }
-        .result { margin-top: 15px; padding: 12px; background: #e94560; color: white; border-radius: 10px; text-align: center; }
+        button { padding: 15px; font-size: 18px; background: #e0e0e0; border: none; border-radius: 10px; cursor: pointer; }
+        button:hover { background: #d0d0d0; }
+        .result { margin-top: 15px; padding: 12px; background: #e94560; color: white; border-radius: 10px; text-align: center; font-size: 18px; font-weight: bold; }
+        .clear-btn { width: 100%; margin-top: 10px; background: #ff6b6b; color: white; }
+        .clear-btn:hover { background: #ff5252; }
     </style>
 </head>
 <body>
@@ -27,7 +30,7 @@
             <button onclick="calculate('/')">÷</button>
         </div>
         
-        <button onclick="clearAll()">Очистить</button>
+        <button class="clear-btn" onclick="clearAll()">🗑️ Очистить всё</button>
         
         <div class="result" id="result">Результат: —</div>
     </div>
@@ -37,6 +40,7 @@
             let a = parseFloat(document.getElementById('num1').value);
             let b = parseFloat(document.getElementById('num2').value);
             let res;
+            let operationText = '';
             
             // Проверка на пустые поля
             if (isNaN(a) || isNaN(b)) {
@@ -50,12 +54,12 @@
                 return;
             }
             
-            if (op === '+') res = a + b;
-            if (op === '-') res = a - b;
-            if (op === '*') res = a * b;
-            if (op === '/') res = a / b;
+            if (op === '+') { res = a + b; operationText = 'сложение'; }
+            if (op === '-') { res = a - b; operationText = 'вычитание'; }
+            if (op === '*') { res = a * b; operationText = 'умножение'; }
+            if (op === '/') { res = a / b; operationText = 'деление'; }
             
-            document.getElementById('result').innerHTML = 'Результат: ' + res;
+            document.getElementById('result').innerHTML = `✅ Результат (${operationText}): ${res}`;
         }
         
         function clearAll() {
