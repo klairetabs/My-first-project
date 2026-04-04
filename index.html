@@ -41,3 +41,16 @@ function calculate(op) {
     if (op === '/') res = a / b;
     document.getElementById('result').innerHTML = 'Результат: ' + res;
 }
+function calculate(op) {
+    let a = parseFloat(document.getElementById('num1').value);
+    let b = parseFloat(document.getElementById('num2').value);
+    if (isNaN(a) || isNaN(b)) {
+        document.getElementById('result').innerHTML = 'Ошибка: введите числа!';
+        return;
+    }
+    if (op === '/' && b === 0) {
+        document.getElementById('result').innerHTML = 'Ошибка: деление на 0!';
+        return;
+    }
+    // остальной код как в шаге 8
+}
