@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Калькулятор</title>
+    <title>Умный калькулятор</title>
     <style>
         * {
             transition: all 0.3s ease;
@@ -10,7 +10,7 @@
         
         /* Светлая тема (по умолчанию) */
         body {
-            font-family: Arial;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -31,6 +31,21 @@
             text-align: center;
             color: #333;
             margin: 0 0 20px 0;
+            font-size: 24px;
+        }
+        
+        /* Дисплей-индикатор (Шаг 15) */
+        .display {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #e94560;
+            font-family: monospace;
+            letter-spacing: 1px;
         }
         
         input {
@@ -39,6 +54,8 @@
             margin: 5px;
             border-radius: 8px;
             border: 1px solid #ddd;
+            font-size: 16px;
+            box-sizing: border-box;
         }
         
         .buttons {
@@ -55,6 +72,8 @@
             border: none;
             border-radius: 10px;
             cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
         }
         
         button:hover {
@@ -130,6 +149,7 @@
         
         .memory-item button:hover {
             background: #c73550;
+            transform: scale(1.02);
         }
         
         .save-memory-btn {
@@ -137,7 +157,10 @@
             padding: 10px;
             background: #4CAF50;
             color: white;
-            border: none;
+            border:
+
+
+none;
             border-radius: 8px;
             cursor: pointer;
             font-size: 14px;
@@ -164,10 +187,7 @@
         }
         
         /* Тёмная тема (Шаг 14) */
-        body.d
-
-
-ark {
+        body.dark {
             background: #1a1a2e;
         }
         
@@ -178,6 +198,11 @@ ark {
         
         body.dark h1 {
             color: #e0e0e0;
+        }
+        
+        body.dark .display {
+            background: #0f3460;
+            color: #e94560;
         }
         
         body.dark input {
@@ -251,6 +276,9 @@ ark {
         <!-- Кнопка тёмной темы (Шаг 14) -->
         <button class="theme-btn" onclick="toggleTheme()">🌙 Включить тёмную тему</button>
         
+        <!-- Дисплей-индикатор (Шаг 15) -->
+        <div class="display" id="display">✨ Готов к работе</div>
+        
         <input type="number" id="num1" placeholder="Первое число">
         <input type="number" id="num2" placeholder="Второе число">
         
@@ -265,7 +293,7 @@ ark {
         
         <div class="result" id="result">Результат: —</div>
         
-        <!-- Блок памяти -->
+        <!-- Блок памяти (Шаг 11) -->
         <div class="memory-panel">
             <h3>📌 Сохранённые результаты</h3>
             <div class="memory-list" id="memoryList">
@@ -277,45 +305,54 @@ ark {
     </div>
 
     <script>
-        // Массив для хранения результатов с объектами {value, time}
-        let memory = [];
+        // Шаг 12: Массив для хранения результатов с объектами {value, time}
+        let me
+
+
+mory = [];
         
+        // Шаг 8-9: Функция вычисления с проверкой ошибок
         function calculate(op) {
             let a = parseFloat(document.getElementById('num1').value);
             let b = parseFloat(document.getElementById('num2').value);
             let res;
             let operationText = '';
+            let operationSymbol = '';
             
-            // Проверка на пустые поля
+            // Шаг 9: Проверка на пустые поля
             if (isNaN(a) || isNaN(b)) {
                 document.getElementById('result').innerHTML = '❌ Ошибка: введите оба числа!';
+                document.getElementById('display').innerHTML = '⚠️ Ошибка ввода';
                 return;
             }
             
-            // Проверка на деление на ноль
+            // Шаг 9: Проверка на деление на ноль
             if (op === '/' && b === 0) {
                 document.getElementById('result').innerHTML = '❌ Ошибка: деление на ноль!';
+                document.getElementById('display').innerHTML = '⛔ Деление на 0 запрещено';
                 return;
             }
             
-            if (op === '+') { res = a + b; operationText = 'сложение'; }
-            if (op === '-') { res = a - b; operationText = 'вычитание'; }
-            if (op
-
-
-=== '*') { res = a * b; operationText = 'умножение'; }
-            if (op === '/') { res = a / b; operationText = 'деление'; }
+            // Вычисление результата
+            if (op === '+') { res = a + b; operationText = 'сложение'; operationSymbol = '+'; }
+            if (op === '-') { res = a - b; operationText = 'вычитание'; operationSymbol = '-'; }
+            if (op === '*') { res = a * b; operationText = 'умножение'; operationSymbol = '×'; }
+            if (op === '/') { res = a / b; operationText = 'деление'; operationSymbol = '÷'; }
             
+            // Шаг 15: Обновление дисплея с действием
+            document.getElementById('display').innerHTML = `${a} ${operationSymbol} ${b} = ${res}`;
             document.getElementById('result').innerHTML = `✅ Результат (${operationText}): ${res}`;
         }
         
+        // Шаг 10: Функция очистки полей
         function clearAll() {
             document.getElementById('num1').value = '';
             document.getElementById('num2').value = '';
             document.getElementById('result').innerHTML = 'Результат: —';
+            document.getElementById('display').innerHTML = '✨ Готов к работе';
         }
         
-        // Функция сохранения в память
+        // Шаг 12-13: Функция сохранения в память
         function saveToMemory() {
             let resultText = document.getElementById('result').innerHTML;
             let match = resultText.match(/\d+\.?\d*/);
@@ -325,25 +362,33 @@ ark {
                 let now = new Date();
                 let timeString = now.toLocaleTimeString();
                 
+                // Сохраняем объект с числом и временем
                 memory.push({
                     value: value,
                     time: timeString
                 });
                 
                 document.getElementById('result').innerHTML = `💾 Результат ${value} сохранён в память (${timeString})!`;
+                document.getElementById('display').innerHTML = `📌 Сохранено: ${value}`;
                 updateMemoryDisplay();
             } else if (resultText.includes('Ошибка')) {
                 document.getElementById('result').innerHTML = '❌ Нельзя сохранить ошибку! Сначала получите корректный результат.';
+                document.getElementById('display').innerHTML = '⚠️ Нельзя сохранить ошибку';
             } else if (resultText.includes('сохранён')) {
                 document.getElementById('result').innerHTML = '❌ Нельзя сохранить одно и то же дважды! Вычислите что-то новое.';
+                document.getElementById('display').innerHTML = '⚠️ Дублирование запрещено';
             } else {
                 document.getElementById('result').innerHTML = '❌ Нет результата для сохранения. Сначала что-нибудь вычислите!';
+                document.getElementById('display').innerHTML = '❌ Нет результата';
             }
         }
         
-        // Функция обновления списка памяти
+        // Шаг 13: Функция обновления списка памяти
         function updateMemoryDisplay() {
-            let container = document.getElementById('memoryList');
+            let container = document.getElementById('memory
+
+
+List');
             
             if (memory.length === 0) {
                 container.innerHTML = '<div style="color: #999; text-align: center;">Пока пусто</div>';
@@ -362,28 +407,27 @@ ark {
             }
         }
         
-        // Функция использования сохранённого числа
+        // Шаг 13: Функция использования сохранённого числа
         function useMemoryItem(index) {
             let val = memory[index].value;
             document.getElementById('result').innerHTML = `📋 Использовано значение из памяти: ${val}`;
-            document.getElementById('result').style.background = '#4CAF50';
+            document.getElementById('display').innerHTML = `📋 Загружено: ${val}`;
+            let resultDiv = document.getElementById('result');
+            resultDiv.style.background = '#4CAF50';
             setTimeout(() => {
-                if (document.body.classList.contains('dark')) {
-                    document.getElementById('result').style.background = '#e94560';
-                } else {
-                    document.getElementById('result').style.background = '#e94560';
-                }
+                resultDiv.style.background = '#e94560';
             }, 1000);
         }
         
-        // Функция очистки всей памяти
+        // Шаг 13: Функция очистки всей памяти
         function clearMemory() {
             memory = [];
             updateMemoryDisplay();
             document.getElementById('result').innerHTML = '🗑️ Память полностью очищена';
+            document.getElementById('display').innerHTML = '🗑️ Память очищена';
         }
         
-        // Функция переключения тёмной темы (Шаг 14)
+        // Шаг 14: Функция переключения тёмной темы
         function toggleTheme() {
             let body = document.body;
             let btn = document.querySelector('.theme-btn');
@@ -391,12 +435,19 @@ ark {
             
             if (body.classList.contains('dark')) {
                 btn.innerHTML = '☀️ Включить светлую тему';
+                document.getElementById('display').innerHTML = '🌙 Тёмная тема включена';
             } else {
-                btn.inne
-
-
-rHTML = '🌙 Включить тёмную тему';
+                btn.innerHTML = '🌙 Включить тёмную тему';
+                document.getElementById('display').innerHTML = '☀️ Светлая тема включена';
             }
+            
+            setTimeout(() => {
+                if (document.getElementById('result').innerHTML !== 'Результат: —') {
+                    // сохраняем текущее состояние
+                } else {
+                    document.getElementById('display').innerHTML = '✨ Готов к работе';
+                }
+            }, 1500);
         }
     </script>
 </body>
