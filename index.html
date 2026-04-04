@@ -73,3 +73,10 @@ function saveToMemory() {
         updateMemoryDisplay();
     }
 }
+function updateMemoryDisplay() {
+    let container = document.getElementById('memoryList');
+    container.innerHTML = '';
+    for (let i = 0; i < memory.length; i++) {
+        container.innerHTML += '<div>' + memory[i] + '</div>';
+    }
+}
