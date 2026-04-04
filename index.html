@@ -31,3 +31,13 @@ input { width: calc(50% - 12px); padding: 12px; margin: 5px; border-radius: 8px;
 .buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 20px 0; }
 button { padding: 15px; background: #e0e0e0; border: none; border-radius: 10px; cursor: pointer; }
 .result { margin-top: 15px; padding: 12px; background: #e94560; color: white; border-radius: 10px; text-align: center; }
+function calculate(op) {
+    let a = parseFloat(document.getElementById('num1').value);
+    let b = parseFloat(document.getElementById('num2').value);
+    let res;
+    if (op === '+') res = a + b;
+    if (op === '-') res = a - b;
+    if (op === '*') res = a * b;
+    if (op === '/') res = a / b;
+    document.getElementById('result').innerHTML = 'Результат: ' + res;
+}
