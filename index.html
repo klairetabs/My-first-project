@@ -79,7 +79,6 @@
             transform: scale(1.02);
         }
         
-        /* Стили для новых операций */
         .special-btn {
             background: #ffd966;
         }
@@ -191,7 +190,6 @@
             transform: scale(1.05);
         }
         
-        /* Тёмная тема */
         body.theme-dark {
             background: #1a1a2e;
         }
@@ -225,7 +223,6 @@
             color: white;
         }
         
-        /* Синяя тема */
         body.theme-blue {
             background: #e3f2fd;
         }
@@ -255,7 +252,6 @@
             color: #0d47a1;
         }
         
-        /* Розовая тема */
         body.theme-pink {
             background: #fce4ec;
         }
@@ -329,6 +325,22 @@
     <script>
         let memory = [];
         
+        // Функция проверки, заполнены ли поля
+        function areNumbersValid(num1, num2, needBoth = true) {
+            if (needBoth) {
+                if (isNaN(num1) || isNaN(num2)) {
+                    document.getElementById('display').innerHTML = '⌨️ Введите оба числа';
+                    return false;
+                }
+            } else {
+                if (isNaN(num1)) {
+                    document.getElementById('display').innerHTML = '⌨️ Введите число';
+                    return false;
+                }
+            }
+            return true;
+        }
+        
         // Основные операции
         function calculate(op) {
             let a = parseFloat(document.getElementById('num1').value);
@@ -337,9 +349,8 @@
             let operationText = '';
             let operationSymbol = '';
             
-            if (isNaN(a) || isNaN(b)) {
-                document.getElementById('result').innerHTML = '❌ Ошибка: введите оба числа!';
-                document.getElementById('display').innerHTML = '⚠️ Ошибка ввода';
+            // Проверка на пустые поля - просто показываем подсказку, НЕ ошибку
+            if (!areNumbersValid(a, b, true)) {
                 return;
             }
             
@@ -358,14 +369,12 @@
             document.getElementById('result').innerHTML = `✅ Результат (${operationText}): ${res}`;
         }
         
-        // НОВАЯ ФУНКЦИЯ: Проценты
+        // Проценты
         function calculatePercent() {
             let a = parseFloat(document.getElementById('num1').value);
             let b = parseFloat(document.getElementById('num2').value);
             
-            if (isNaN(a) || isNaN(b)) {
-                document.getElementById('result').innerHTML = '❌ Ошибка: введите оба числа!';
-                document.getElementById('display').innerHTML = '⚠️ Ошибка ввода';
+            if (!areNumbersValid(a, b, true)) {
                 return;
             }
             
@@ -374,13 +383,11 @@
             document.getElementById('result').innerHTML = `✅ ${a}% от ${b} = ${res}`;
         }
         
-        // НОВАЯ ФУНКЦИЯ: Возведение в квадрат
+        // Возведение в квадрат
         function calculateSquare() {
             let a = parseFloat(document.getElementById('num1').value);
             
-            if (isNaN(a)) {
-                document.getElementById('result').innerHTML = '❌ Ошибка: введите первое число!';
-                document.getElementById('display').innerHTML = '⚠️ Ошибка ввода';
+            if (!areNumbersValid(a, 0, false)) {
                 return;
             }
             
@@ -389,13 +396,11 @@
             document.getElementById('result').innerHTML = `✅ Квадрат числа ${a} = ${res}`;
         }
         
-        // НОВАЯ ФУНКЦИЯ: Квадратный корень
+        // Квадратный корень
         function calculateSqrt() {
             let a = parseFloat(document.getElementById('num1').value);
             
-            if (isNaN(a)) {
-                document.getElementById('result').innerHTML = '❌ Ошибка: введите первое число!';
-                document.getElementById('display').innerHTML = '⚠️ Ошибка ввода';
+            if (!areNumbersValid(a, 0, false)) {
                 return;
             }
             
@@ -431,11 +436,9 @@
                 document.getElementById('display').innerHTML = `📌 Сохранено: ${value}`;
                 updateMemoryDisplay();
             } else if (resultText.includes('Ошибка')) {
-                document.getElementById('result').innerHTML = '❌ Нельзя сохранить ошибку!';
                 document.getElementById('display').innerHTML = '⚠️ Нельзя сохранить ошибку';
             } else {
-                document.getElementById('result').innerHTML = '❌ Нет результата для сохранения!';
-                document.getElementById('display').innerHTML = '❌ Нет результата';
+                document.getElementById('display').innerHTML = '❌ Нет результата для сохранения';
             }
         }
         
