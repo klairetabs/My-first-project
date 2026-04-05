@@ -44,6 +44,7 @@
             font-weight: bold;
             color: #e94560;
             font-family: monospace;
+            min-height: 60px;
         }
         
         input {
@@ -76,6 +77,15 @@
         button:hover {
             background: #d0d0d0;
             transform: scale(1.02);
+        }
+        
+        /* Стили для новых операций */
+        .special-btn {
+            background: #ffd966;
+        }
+        
+        .special-btn:hover {
+            background: #ffcc33;
         }
         
         .result {
@@ -181,6 +191,7 @@
             transform: scale(1.05);
         }
         
+        /* Тёмная тема */
         body.theme-dark {
             background: #1a1a2e;
         }
@@ -203,6 +214,9 @@
             background: #0f3460;
             color: white;
         }
+        body.theme-dark .special-btn {
+            background: #e94560;
+        }
         body.theme-dark .memory-panel {
             background: #0f3460;
         }
@@ -211,6 +225,7 @@
             color: white;
         }
         
+        /* Синяя тема */
         body.theme-blue {
             background: #e3f2fd;
         }
@@ -228,6 +243,10 @@
             background: #1976d2;
             color: white;
         }
+        body.theme-blue .special-btn {
+            background: #ffd966;
+            color: #333;
+        }
         body.theme-blue .memory-panel {
             background: #e3f2fd;
         }
@@ -236,6 +255,7 @@
             color: #0d47a1;
         }
         
+        /* Розовая тема */
         body.theme-pink {
             background: #fce4ec;
         }
@@ -252,6 +272,10 @@
         body.theme-pink button {
             background: #e91e63;
             color: white;
+        }
+        body.theme-pink .special-btn {
+            background: #ffd966;
+            color: #333;
         }
         body.theme-pink .memory-panel {
             background: #fce4ec;
@@ -283,6 +307,9 @@
             <button onclick="calculate('-')">-</button>
             <button onclick="calculate('*')">×</button>
             <button onclick="calculate('/')">÷</button>
+            <button class="special-btn" onclick="calculatePercent()">%</button>
+            <button class="special-btn" onclick="calculateSquare()">x²</button>
+            <button class="special-btn" onclick="calculateSqrt()">√</button>
         </div>
         
         <button class="clear-btn" onclick="clearAll()">🗑️ Очистить всё</button>
@@ -302,6 +329,7 @@
     <script>
         let memory = [];
         
+        // Основные операции
         function calculate(op) {
             let a = parseFloat(document.getElementById('num1').value);
             let b = parseFloat(document.getElementById('num2').value);
@@ -328,6 +356,58 @@
             
             document.getElementById('display').innerHTML = `${a} ${operationSymbol} ${b} = ${res}`;
             document.getElementById('result').innerHTML = `✅ Результат (${operationText}): ${res}`;
+        }
+        
+        // НОВАЯ ФУНКЦИЯ: Проценты
+        function calculatePercent() {
+            let a = parseFloat(document.getElementById('num1').value);
+            let b = parseFloat(document.getElementById('num2').value);
+            
+            if (isNaN(a) || isNaN(b)) {
+                document.getElementById('result').innerHTML = '❌ Ошибка: введите оба числа!';
+                document.getElementById('display').innerHTML = '⚠️ Ошибка ввода';
+                return;
+            }
+            
+            let res = (a * b) / 100;
+            document.getElementById('display').innerHTML = `${a}% от ${b} = ${res}`;
+            document.getElementById('result').innerHTML = `✅ ${a}% от ${b} = ${res}`;
+        }
+        
+        // НОВАЯ ФУНКЦИЯ: Возведение в квадрат
+        function calculateSquare() {
+            let a = parseFloat(document.getElementById('num1').value);
+            
+            if (isNaN(a)) {
+                document.getElementById('result').innerHTML = '❌ Ошибка: введите первое число!';
+                document.getElementById('display').innerHTML = '⚠️ Ошибка ввода';
+                return;
+            }
+            
+            let res = a * a;
+            document.getElementById('display').innerHTML = `${a}² = ${res}`;
+            document.getElementById('result').innerHTML = `✅ Квадрат числа ${a} = ${res}`;
+        }
+        
+        // НОВАЯ ФУНКЦИЯ: Квадратный корень
+        function calculateSqrt() {
+            let a = parseFloat(document.getElementById('num1').value);
+            
+            if (isNaN(a)) {
+                document.getElementById('result').innerHTML = '❌ Ошибка: введите первое число!';
+                document.getElementById('display').innerHTML = '⚠️ Ошибка ввода';
+                return;
+            }
+            
+            if (a < 0) {
+                document.getElementById('result').innerHTML = '❌ Ошибка: корень из отрицательного числа!';
+                document.getElementById('display').innerHTML = '⛔ Невозможно';
+                return;
+            }
+            
+            let res = Math.sqrt(a);
+            document.getElementById('display').innerHTML = `√${a} = ${res}`;
+            document.getElementById('result').innerHTML = `✅ Квадратный корень из ${a} = ${res}`;
         }
         
         function clearAll() {
